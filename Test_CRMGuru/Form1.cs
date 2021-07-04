@@ -67,16 +67,9 @@ namespace Test_CRMGuru
                 MessageBox.Show("Город не найден");
                 return;
             }
-            sReadData = sReadData.Substring(1, sReadData.Length - 2);
-            Country country = JsonConvert.DeserializeObject<Country>(sReadData);
+            dynamic d = JsonConvert.DeserializeObject(sReadData);
             AddColunmInDataGrid();
-            AddRowInDataGrid(country);
-
-            DialogResult result = MessageBox.Show("Сохранить информацию в базу данных?", "Сохранение", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                SendInBase(country);
-            }
+            AddRowInDataGrid(d);
         }
 
         private void AddColunmInDataGrid()
@@ -90,18 +83,10 @@ namespace Test_CRMGuru
             dataGridViewCountry.Columns.Add("region", "Region");
         }
 
-        private void AddRowInDataGrid(Country c)
+        private void AddRowInDataGrid(dynamic d)
         {
             dataGridViewCountry.Rows.Clear();
-            dataGridViewCountry.Rows.Add(c.name, c.alpha2Code, c.capital, c.area, c.population, c.region);
-        }
-
-        private void SendInBase(Country c)
-        {
-            DataBaseCountry dataBaseCountry = new DataBaseCountry();
-            dataBaseCountry.OpenConnection();
-            dataBaseCountry.WriteCountry(c);
-            dataBaseCountry.CloseConnection();
+            dataGridViewCountry.Rows.Add(d[0].name, d[0].alpha2Code, d[0].capital, d[0].area, d[0].population, d[0].region);
         }
     }
 }
