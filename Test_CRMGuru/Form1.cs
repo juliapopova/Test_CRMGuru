@@ -92,7 +92,7 @@ namespace Test_CRMGuru
 
         private void AddRowInDataGrid(Country c)
         {
-            dataGridViewCountry.Rows.Clear();
+            dataGridViewCountry.DataSource = null;
             dataGridViewCountry.Rows.Add(c.name, c.alpha2Code, c.capital, c.area, c.population, c.region);
         }
 
@@ -102,6 +102,22 @@ namespace Test_CRMGuru
             dataBaseCountry.OpenConnection();
             dataBaseCountry.WriteCountry(c);
             dataBaseCountry.CloseConnection();
+        }
+
+        private void but_LoadFromBD_Click(object sender, EventArgs e)
+        {
+            LoadFromBD();
+        }
+
+        private void LoadFromBD()
+        {
+            dataGridViewCountry.Columns.Clear();
+
+            DataBaseCountry dataBaseCountry = new DataBaseCountry();
+            dataBaseCountry.OpenConnection();
+            DataSet dataSet = dataBaseCountry.ReadBase();
+            dataGridViewCountry.DataSource = dataSet.Tables[0];
+            dataBaseCountry.CloseConnection();           
         }
     }
 }

@@ -83,6 +83,7 @@ namespace Test_CRMGuru
             this.but_LoadFromBD.TabIndex = 2;
             this.but_LoadFromBD.Text = "Вывести все страны из базы данных";
             this.but_LoadFromBD.UseVisualStyleBackColor = true;
+            this.but_LoadFromBD.Click += new System.EventHandler(this.but_LoadFromBD_Click);
             // 
             // but_SearchCountry
             // 
