@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +19,7 @@ namespace Test_CRMGuru
             InitializeComponent();
         }
 
+        //метод для изменения цвета шрифта при вводе текста
         private void textBox_Country_Click(object sender, EventArgs e)
         {
             if (textBox_Country.Text == "Введите название страны")
@@ -28,7 +28,7 @@ namespace Test_CRMGuru
                 textBox_Country.ForeColor = Color.Black;
             }
         }
-
+        //метод для вывода подсказки пользователю
         private void textBox_Country_Leave(object sender, EventArgs e)
         {
             if (textBox_Country.Text == "")
@@ -43,32 +43,27 @@ namespace Test_CRMGuru
             SearchCountry();
         }
 
+        //метод для поиска страны
         private void SearchCountry()
         {
+            //проверка на пустоту
             if (textBox_Country.Text == "Введите название страны" || textBox_Country.Text == "")
             {
                 MessageBox.Show("Введите название страны!");
                 return;
             }
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://restcountries.eu/rest/v2/name/" + textBox_Country.Text);
-            string sReadData;
-            try
-            {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                StreamReader sr = new StreamReader(stream);
 
-                sReadData = sr.ReadToEnd();
+            Country country = new Country();
 
-                response.Close();
-            }
-            catch
+            HttpRequestCountry requestCountry = new HttpRequestCountry();
+
+            country = requestCountry.GetCountry(textBox_Country.Text);
+            //проверка, найдена ли страна с таким названием
+            if (country == null)
             {
                 MessageBox.Show("Страна не найдена");
                 return;
             }
-            sReadData = sReadData.Substring(1, sReadData.Length - 2);
-            Country country = JsonConvert.DeserializeObject<Country>(sReadData);
             AddColunmInDataGrid();
             AddRowInDataGrid(country);
 
@@ -79,6 +74,7 @@ namespace Test_CRMGuru
             }
         }
 
+        //добавление колонок в таблицу
         private void AddColunmInDataGrid()
         {
             dataGridViewCountry.Columns.Clear();
@@ -90,18 +86,27 @@ namespace Test_CRMGuru
             dataGridViewCountry.Columns.Add("region", "Region");
         }
 
+        //добавление строк в таблицу в таблицу
         private void AddRowInDataGrid(Country c)
         {
             dataGridViewCountry.DataSource = null;
             dataGridViewCountry.Rows.Add(c.name, c.alpha2Code, c.capital, c.area, c.population, c.region);
         }
 
+        //запись в БД
         private void SendInBase(Country c)
         {
-            DataBaseCountry dataBaseCountry = new DataBaseCountry();
-            dataBaseCountry.OpenConnection();
-            dataBaseCountry.WriteCountry(c);
-            dataBaseCountry.CloseConnection();
+            DataBaseCountry dataBaseCountry = new DataBaseCountry();            
+            if (dataBaseCountry.OpenConnection()) 
+            {
+                //если произошло подключение, то идет запись в БД
+                dataBaseCountry.WriteCountry(c);
+                dataBaseCountry.CloseConnection();
+            }
+            else
+            {
+                return;
+            }            
         }
 
         private void but_LoadFromBD_Click(object sender, EventArgs e)
@@ -109,15 +114,24 @@ namespace Test_CRMGuru
             LoadFromBD();
         }
 
+        //чтение из БД
         private void LoadFromBD()
         {
             dataGridViewCountry.Columns.Clear();
 
             DataBaseCountry dataBaseCountry = new DataBaseCountry();
-            dataBaseCountry.OpenConnection();
-            DataSet dataSet = dataBaseCountry.ReadBase();
-            dataGridViewCountry.DataSource = dataSet.Tables[0];
-            dataBaseCountry.CloseConnection();           
+            if (dataBaseCountry.OpenConnection())
+            {
+                //если произошло подключение, то идет чтение из БД
+                DataSet dataSet = dataBaseCountry.ReadBase();
+                dataGridViewCountry.DataSource = dataSet.Tables[0];
+                dataBaseCountry.CloseConnection();
+            }
+            else
+            {
+                return;
+            }
+                       
         }
     }
 }
