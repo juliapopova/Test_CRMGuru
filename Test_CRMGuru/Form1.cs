@@ -64,7 +64,7 @@ namespace Test_CRMGuru
             }
             catch
             {
-                MessageBox.Show("Город не найден");
+                MessageBox.Show("Страна не найдена");
                 return;
             }
             sReadData = sReadData.Substring(1, sReadData.Length - 2);
