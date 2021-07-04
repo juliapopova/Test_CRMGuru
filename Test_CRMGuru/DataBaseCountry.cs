@@ -11,6 +11,6 @@ namespace Test_CRMGuru
 {
     class DataBaseCountry
     {
-        private SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionCountry"].ConnectionString);
+        private SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionCountry"].ConnectionString);        
     }
 }

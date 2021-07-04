@@ -32,9 +32,9 @@ namespace Test_CRMGuru
             this.dataGridViewCountry = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox_Country = new System.Windows.Forms.TextBox();
-            this.but_SearchCountry = new System.Windows.Forms.Button();
             this.but_LoadFromBD = new System.Windows.Forms.Button();
+            this.but_SearchCountry = new System.Windows.Forms.Button();
+            this.textBox_Country = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCountry)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -75,6 +75,25 @@ namespace Test_CRMGuru
             this.panel1.Size = new System.Drawing.Size(1241, 66);
             this.panel1.TabIndex = 4;
             // 
+            // but_LoadFromBD
+            // 
+            this.but_LoadFromBD.Location = new System.Drawing.Point(9, 36);
+            this.but_LoadFromBD.Name = "but_LoadFromBD";
+            this.but_LoadFromBD.Size = new System.Drawing.Size(433, 23);
+            this.but_LoadFromBD.TabIndex = 2;
+            this.but_LoadFromBD.Text = "Вывести все страны из базы данных";
+            this.but_LoadFromBD.UseVisualStyleBackColor = true;
+            // 
+            // but_SearchCountry
+            // 
+            this.but_SearchCountry.Location = new System.Drawing.Point(295, 8);
+            this.but_SearchCountry.Name = "but_SearchCountry";
+            this.but_SearchCountry.Size = new System.Drawing.Size(147, 22);
+            this.but_SearchCountry.TabIndex = 1;
+            this.but_SearchCountry.Text = "Найти страну";
+            this.but_SearchCountry.UseVisualStyleBackColor = true;
+            this.but_SearchCountry.Click += new System.EventHandler(this.but_SearchCountry_Click);
+            // 
             // textBox_Country
             // 
             this.textBox_Country.ForeColor = System.Drawing.Color.Gray;
@@ -85,24 +104,6 @@ namespace Test_CRMGuru
             this.textBox_Country.Text = "Введите название страны";
             this.textBox_Country.Click += new System.EventHandler(this.textBox_Country_Click);
             this.textBox_Country.Leave += new System.EventHandler(this.textBox_Country_Leave);
-            // 
-            // but_SearchCountry
-            // 
-            this.but_SearchCountry.Location = new System.Drawing.Point(295, 8);
-            this.but_SearchCountry.Name = "but_SearchCountry";
-            this.but_SearchCountry.Size = new System.Drawing.Size(147, 22);
-            this.but_SearchCountry.TabIndex = 1;
-            this.but_SearchCountry.Text = "Найти страну";
-            this.but_SearchCountry.UseVisualStyleBackColor = true;
-            // 
-            // but_LoadFromBD
-            // 
-            this.but_LoadFromBD.Location = new System.Drawing.Point(9, 36);
-            this.but_LoadFromBD.Name = "but_LoadFromBD";
-            this.but_LoadFromBD.Size = new System.Drawing.Size(433, 23);
-            this.but_LoadFromBD.TabIndex = 2;
-            this.but_LoadFromBD.Text = "Вывести все страны из базы данных";
-            this.but_LoadFromBD.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
